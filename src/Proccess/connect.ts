@@ -1,5 +1,5 @@
 /* Discord.JS */
-import { Collection, Events, GatewayIntentBits, MessageFlags } from "discord.js";
+import { Collection, Events, GatewayIntentBits } from "discord.js";
 
 /* Scratch Code */
 import { Enviroment } from "../Configs/enviroment";
@@ -12,7 +12,7 @@ import { ExtendedClient } from "../Configs/client"; // Command type is added to 
 
 const client = new ExtendedClient({ intents: [GatewayIntentBits.Guilds] });
 
-export default function connectClient() {
+export default async function connectClient() {
   if (!Enviroment.BOT_TOKEN) {
     throw new Error("DISCORD_TOKEN is missing. Add it to the .env file.");
   }
@@ -26,7 +26,7 @@ export default function connectClient() {
 /*
 Commands will be loaded here.
 */
-CommandLoader(client);
+await CommandLoader(client);
 
 
 
