@@ -22,7 +22,6 @@ export function MessageReciever(Client: ExtendedClient) {
                 await message.reply({ content: "There was an error while executing this command!", ephemeral: true });
             }
             // other text with new text
-            //new line
         }
     });
 }
