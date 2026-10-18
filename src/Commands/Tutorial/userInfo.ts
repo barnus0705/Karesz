@@ -8,5 +8,6 @@ export default {
         await interaction.reply(`Username: ${user.username}\nID: ${user.id}`);
         // valami
         // keksz
+        // szalámi
     }
 };
