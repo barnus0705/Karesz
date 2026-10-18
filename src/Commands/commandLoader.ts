@@ -1,9 +1,10 @@
 import fs from "fs";
 import path from "path";
+import { pathToFileURL } from "url";
 
 import { ExtendedClient } from "../Configs/client";
 
-export function CommandLoader(Client: ExtendedClient) {
+export async function CommandLoader(Client: ExtendedClient) {
     const commandFolders = fs.readdirSync(__dirname, { withFileTypes: true })
                             .filter(folder => folder.isDirectory());
 
@@ -14,7 +15,7 @@ export function CommandLoader(Client: ExtendedClient) {
                                .filter(file => file.isFile());
         for (const file of commandFiles) {
             const commandFilePath = path.join(commandPath, file.name);
-            const command = require(commandFilePath);
+            const command = await import(pathToFileURL(commandFilePath).href);
 
             if (command && command.default) {
                 Client.commands.set(command.default.data.name, command.default);
