@@ -7,5 +7,6 @@ export default {
         const user = interaction.user;
         await interaction.reply(`Username: ${user.username}\nID: ${user.id}`);
         // valami
+        // keksz
     }
 };
