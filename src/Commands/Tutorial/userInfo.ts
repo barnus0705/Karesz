@@ -6,5 +6,6 @@ export default {
         async execute(interaction: CommandInteraction) {
         const user = interaction.user;
         await interaction.reply(`Username: ${user.username}\nID: ${user.id}`);
+        // valami
     }
 };
