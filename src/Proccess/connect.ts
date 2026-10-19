@@ -40,5 +40,10 @@ MessageReciever(client);
 /*
 Discord client login.
 */
-  client.login(Enviroment.BOT_TOKEN);
+  try {
+    await client.login(Enviroment.BOT_TOKEN);
+  } catch (error) {
+    console.error("Discord login failed:", error);
+    process.exit(1);
+  }
 }
