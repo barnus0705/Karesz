@@ -6,15 +6,15 @@ import { createRulebookEmbed } from "../../BGG/Model/ruleBookModel";
 
 export default {
     data: new SlashCommandBuilder()
-        .setName("boardgamedesc")
-        .setDescription("Get the description of a board game")
+        .setName("bg-rulebooks")
+        .setDescription("Get the rulebooks of a board game")
         .addStringOption(option =>
-            option.setName("board_game_name")
+            option.setName("name")
                 .setDescription("The name of the board game")
                 .setRequired(true)
         ),
     async execute(interaction: ChatInputCommandInteraction) {
-       const boardGameName = interaction.options.getString("board_game_name", true);
+       const boardGameName = interaction.options.getString("name", true);
        const rulebooks = await getRulebooks(boardGameName);
        const embeds = rulebooks.map(createRulebookEmbed);
         await interaction.reply({ embeds });
