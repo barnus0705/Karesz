@@ -6,6 +6,7 @@ import { Enviroment } from "../Configs/enviroment";
 import { CommandLoader } from "../Commands/commandLoader";
 
 import { MessageReciever } from "../Messages/messageReciever";
+import  onRuleBookModal  from "../Messages/Modal/postRuleBook";
 
 /* Class extension */
 import { ExtendedClient } from "../Configs/client"; // Command type is added to the class
@@ -35,6 +36,8 @@ await CommandLoader(client);
 Message receiver will be set up here.
 */
 MessageReciever(client);
+onRuleBookModal(client);
+
 
 
 /*

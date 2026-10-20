@@ -1,7 +1,8 @@
 import { SlashCommandBuilder } from "discord.js";
 import type { ChatInputCommandInteraction } from "discord.js";
+import type { Rulebook } from "../../BGG/Model/ruleBookModel";
 
-import { getRulebooks } from "../../BGG/Get/rulebooks";
+import { getRulebooks } from "../../BGG/Get/ruleBooks";
 import { createRulebookEmbed } from "../../BGG/Model/ruleBookModel";
 
 export default {
@@ -16,7 +17,17 @@ export default {
     async execute(interaction: ChatInputCommandInteraction) {
        const boardGameName = interaction.options.getString("name", true);
        const rulebooks = await getRulebooks(boardGameName);
-       const embeds = rulebooks.map(createRulebookEmbed);
-        await interaction.reply({ embeds });
+       const embeds = rulebooks.map((rulebook: Rulebook) => createRulebookEmbed(rulebook));
+
+        // Discord allows at most 10 embeds per message
+        for (let i = 0; i < embeds.length; i += 10) {
+            const batch = embeds.slice(i, i + 10);
+
+            if (i === 0) {
+                await interaction.reply({ embeds: batch });
+            } else {
+                await interaction.followUp({ embeds: batch });
+            }
+        }
     }
 };

@@ -1,0 +1,18 @@
+{
+  "BoardGames": [
+    {
+      "id": "voidfall-release-rulebook",
+      "name": "Voidfall",
+      "lowName": "voidfall",
+      "link": "https://mindclashgames.com/wp-content/uploads/2023/03/VOIDFALL-Rulebook-websafe.pdf",
+      "language": "en"
+    },
+    {
+      "id": "walter-white",
+      "name": "Walter White",
+      "lowName": "walter white",
+      "link": "https://static2.klipy.com/ii/4493325008d34b7bf8cd6813cd5c1619/4b/30/fk4loINf15MyRi.gif",
+      "language": "Waltah"
+    }
+  ]
+}
