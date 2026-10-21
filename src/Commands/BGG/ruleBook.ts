@@ -17,7 +17,9 @@ export default {
     async execute(interaction: ChatInputCommandInteraction) {
        const boardGameName = interaction.options.getString("name", true);
        const rulebooks = await getRulebooks(boardGameName);
-       const embeds = rulebooks.map((rulebook: Rulebook) => createRulebookEmbed(rulebook));
+       const embeds = await Promise.all(
+           rulebooks.map((rulebook: Rulebook) => createRulebookEmbed(rulebook))
+       );
 
         // Discord allows at most 10 embeds per message
         for (let i = 0; i < embeds.length; i += 10) {
