@@ -2,9 +2,11 @@ import {
         ModalBuilder,
         TextInputBuilder,
         TextInputStyle,
-        LabelBuilder
+        LabelBuilder,
+        StringSelectMenuBuilder
     }
  from "discord.js";
+import languageFile from "../../../Data/languages.json";
 
 export const ruleBookModal = new ModalBuilder()
     .setCustomId("ruleBookModal")
@@ -24,6 +26,7 @@ const Inputs = [
         required: true
     },
     {
+        type: "SelectMenu", 
         id: "language",
         label: "Language",
         style: TextInputStyle.Short,
@@ -37,9 +40,28 @@ for (const input of Inputs) {
         .setStyle(input.style)
         .setRequired(input.required);
 
+
     const label = new LabelBuilder()
         .setLabel(input.label)
         .setTextInputComponent(textInput);
 
-    ruleBookModal.addLabelComponents(label);
+    if (input.type === "SelectMenu") {
+        const languageSelectMenu = new StringSelectMenuBuilder()
+            .setCustomId(input.id)
+            .setPlaceholder("Select a language")
+            .addOptions(
+                Object.entries(languageFile.Languages).map(([key, lang]) => ({
+                    label: lang,
+                    value: key
+                }))
+            );
+
+        ruleBookModal.addLabelComponents(
+            new LabelBuilder()
+                .setLabel(input.label)
+                .setStringSelectMenuComponent(languageSelectMenu)
+        );
+    }else{
+        ruleBookModal.addLabelComponents(label);
+    }
 }
