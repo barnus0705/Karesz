@@ -4,5 +4,6 @@ export const Enviroment = {
   BOT_TOKEN: process.env.DISCORD_TOKEN,
   CLIENT_ID: process.env.CLIENT_ID,
   GUILD_ID: process.env.GUILD_ID,
-  RANDOM_BYTES: Number(process.env.RANDOM_BYTES)
+  RANDOM_BYTES: Number(process.env.RANDOM_BYTES),
+  RIOT_API_KEY: process.env.RIOT_API_KEY
 };
