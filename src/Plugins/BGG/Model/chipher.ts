@@ -1,11 +1,11 @@
 import { createCipheriv, randomBytes } from "crypto";
-import { Enviroment } from "../../Configs/enviroment";
+import { Enviroment } from "../../../Configs/enviroment";
 import path from "path";
 import { readFile, writeFile } from "fs/promises";
-import encryptKeys from "../../Data/encryptKeys.json";
+import encryptKeys from "../../../Data/encryptKeys.json";
 
 export default async function encrypt(text: string, name: string) {
-    const filePath = path.resolve(__dirname, "../../Data/encryptKeys.json");
+    const filePath = path.resolve(__dirname, "../../../Data/encryptKeys.json");
     const config = {
         iv: randomBytes(12),
         key: randomBytes(Enviroment.RANDOM_BYTES),

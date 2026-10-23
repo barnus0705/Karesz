@@ -1,9 +1,9 @@
 import { Events } from "discord.js";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
-import { ExtendedClient } from "../../Configs/client";
-import { Rulebook } from "../Model/ruleBookModel";
-import { createRulebookEmbed } from "../../BGG/Model/ruleBookModel";
+import { ExtendedClient } from "../../../Configs/client";
+import type { Rulebook } from "../Model/ruleBookModel";
+import { createRulebookEmbed } from "../Model/ruleBookModel";
 import { isValidUrl } from "../Checks/url";
 import { existingBoardGame } from "../Checks/exist";
 
@@ -13,7 +13,7 @@ export default function onRuleBookModal(client: ExtendedClient) {
     client.on(Events.InteractionCreate, async (interaction) => {
         if (!interaction.isModalSubmit() || interaction.customId !== "ruleBookModal") return;
         if (interaction.customId === "ruleBookModal") {
-            const filePath = path.resolve(__dirname, "../../Data/offChartBGs.json");
+            const filePath = path.resolve(__dirname, "../../../Data/offChartBGs.json");
             let link: string | undefined = interaction.fields.getTextInputValue("rulebookLink");
             const boardGameName = interaction.fields.getTextInputValue("boardGameName");
             link = await isValidUrl(link, boardGameName, interaction);

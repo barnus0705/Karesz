@@ -6,7 +6,7 @@ import { Enviroment } from "../Configs/enviroment";
 import { CommandLoader } from "../Commands/commandLoader";
 
 import { MessageReciever } from "../Messages/messageReciever";
-import  onRuleBookModal  from "../BGG/Message/postRuleBook";
+import onRuleBookModal from "../Plugins/BGG/Message/postRuleBook";
 
 /* Class extension */
 import { ExtendedClient } from "../Configs/client"; // Command type is added to the class

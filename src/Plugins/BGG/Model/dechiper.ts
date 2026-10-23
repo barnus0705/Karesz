@@ -3,7 +3,7 @@ import path from "path";
 import { readFile } from "fs/promises";
 
 export default async function decrypt(text: string, name: string) {
-    const filePath = path.resolve(__dirname, "../../Data/encryptKeys.json");
+    const filePath = path.resolve(__dirname, "../../../Data/encryptKeys.json");
     const Encryptdata = JSON.parse(await readFile(filePath, "utf-8"));
 
     const encryptKey = Encryptdata.Links.find((item: { name: string; key: string }) => item.name === name);

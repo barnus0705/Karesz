@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from "discord.js";
 import type { ChatInputCommandInteraction } from "discord.js";
-import type { Rulebook } from "../../BGG/Model/ruleBookModel";
+import type { Rulebook } from "../../Plugins/BGG/Model/ruleBookModel";
 
-import { getRulebooks } from "../../BGG/Get/ruleBooks";
-import { createRulebookEmbed } from "../../BGG/Model/ruleBookModel";
+import { getRulebooks } from "../../Plugins/BGG/Get/ruleBooks";
+import { createRulebookEmbed } from "../../Plugins/BGG/Model/ruleBookModel";
 
 export default {
     data: new SlashCommandBuilder()

@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "discord.js";
 import decrypt from "./dechiper";
-import languageFile from "../../Data/languages.json";
+import languageFile from "../../../Data/languages.json";
 
 
 export interface Rulebook {

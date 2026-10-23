@@ -17,20 +17,24 @@ const Inputs = [
         id: "boardGameName",
         label: "Name",
         style: TextInputStyle.Short,
-        required: true
+        required: true,
+        placeholder: "Twilight Imperium"
     },
     {
         id: "rulebookLink",
         label: "Rulebook Link",
         style: TextInputStyle.Paragraph,
-        required: true
+        required: true,
+        placeholder: "https://example.com/rulebook.pdf"
+        
     },
     {
         type: "SelectMenu", 
         id: "language",
         label: "Language",
         style: TextInputStyle.Short,
-        required: true
+        required: true,
+        placeholder: "Select a language"
     },
 ];
 
@@ -38,7 +42,8 @@ for (const input of Inputs) {
     const textInput = new TextInputBuilder()
         .setCustomId(input.id)
         .setStyle(input.style)
-        .setRequired(input.required);
+        .setRequired(input.required)
+        .setPlaceholder(input.placeholder);
 
 
     const label = new LabelBuilder()
@@ -48,7 +53,7 @@ for (const input of Inputs) {
     if (input.type === "SelectMenu") {
         const languageSelectMenu = new StringSelectMenuBuilder()
             .setCustomId(input.id)
-            .setPlaceholder("Select a language")
+            .setPlaceholder(input.placeholder)
             .addOptions(
                 Object.entries(languageFile.Languages).map(([key, lang]) => ({
                     label: lang,
