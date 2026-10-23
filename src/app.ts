@@ -1,3 +1,6 @@
 import connectClient from "./Proccess/connect";
 
-connectClient();
+connectClient().catch((error) => {
+    console.error(error);
+    process.exit(1);
+});

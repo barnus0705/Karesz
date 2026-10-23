@@ -6,6 +6,7 @@ import { Enviroment } from "../Configs/enviroment";
 import { CommandLoader } from "../Commands/commandLoader";
 
 import { MessageReciever } from "../Messages/messageReciever";
+import onRuleBookModal from "../Plugins/BGG/Message/postRuleBook";
 
 /* Class extension */
 import { ExtendedClient } from "../Configs/client"; // Command type is added to the class
@@ -35,10 +36,17 @@ await CommandLoader(client);
 Message receiver will be set up here.
 */
 MessageReciever(client);
+onRuleBookModal(client);
+
 
 
 /*
 Discord client login.
 */
-  client.login(Enviroment.BOT_TOKEN);
+  try {
+    await client.login(Enviroment.BOT_TOKEN);
+  } catch (error) {
+    console.error("Discord login failed:", error);
+    process.exit(1);
+  }
 }
