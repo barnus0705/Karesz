@@ -3,7 +3,6 @@ import { getMatchHistory } from '../../Plugins/Riot_League/getMatchHistory';
 import { saveMatchHistory } from '../../Plugins/Riot_League/DataCache/matchHistory';
 import { SlashCommandBuilder, MessageFlags } from 'discord.js';
 import type { ChatInputCommandInteraction } from 'discord.js';
-import { getUserCache } from '../../Plugins/Riot_League/DataCache/userCache';
 import { getMatchInfo } from '../../Plugins/Riot_League/getMatchInfo';
 import { createMatchContainer } from '../../Plugins/Riot_League/Model/container';
 
@@ -16,16 +15,6 @@ export default {
             option.setName("summoner_name")
                 .setDescription("Summoner name")
                 .setRequired(true);
-            const choices: string[] = getUserCache();
-
-            if (choices.length === 0){
-                return option;
-            }else{
-                option.addChoices(
-                    ...choices.map((summonerName: string) =>
-                        ({ name: summonerName, value: summonerName }))
-                );
-            }
             return option;
         })
         .addStringOption(option => 
@@ -66,6 +55,8 @@ export default {
             await interaction.reply({ content: `Unknown region: ${values.region}`, flags: MessageFlags.Ephemeral });
             return;
         }
+
+        
         const summonerURI = encodeURIComponent(values.summonerName).toString();
         const puuidResponse = await getRiotPUUID({ summonerName: summonerURI, summonerTag: values.summonerTag, region: regions[values.region], puuid: "" });
         console.log(puuidResponse.puuid);
@@ -83,7 +74,8 @@ export default {
             for (const container of matchContainer) {
                 if (firstCommit) {
                     firstCommit = false;
-                    await interaction.reply({ components: [container], flags: MessageFlags.IsComponentsV2 });
+                    await interaction.reply({ content: "Match History for " + values.summonerName});
+                    await interaction.followUp({ components: [container], flags: MessageFlags.IsComponentsV2 });
                 } else {
                     await interaction.followUp({ components: [container], flags: MessageFlags.IsComponentsV2 });
                 }

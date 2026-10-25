@@ -12,7 +12,11 @@ export async function getMatchHistory(
                 'Content-Type': 'application/json'
             }
         });
-        return await response.json();
+        const data = await response.json();
+        if (!response.ok || !Array.isArray(data)) {
+            throw new Error(`Riot API ${response.status}: ${JSON.stringify(data)}`);
+        }
+        return data;
     } catch (error) {
         throw new Error(`Failed to fetch match history: ${error}`);
     }

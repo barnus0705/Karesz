@@ -17,25 +17,42 @@ export async function createMatchContainer(info: MatchInformations, participants
 
 
 
-    const Titles =[
-        `🔵 Blue Team \t ${info.matchId}`,
-        `🔴 Red Team \t ${info.matchId}`
+    const Titles = [
+        `🔵 Blue Team | Kills: ${info.teamAkills} Deaths: ${info.teamBkills}`,
+        `🔴 Red Team | Kills: ${info.teamBkills} Deaths: ${info.teamAkills}`
     ]
+    const GameDate = [
+        `Game Date: ${new Date(info.gameStartTimestamp).toLocaleString()}\nDuration: ${Math.floor(info.gameDuration/60)}m ${info.gameDuration%60}s`,
+    ];
 
-    const getColor = (won: boolean) => (won ? 0x1f8b4c : 0xff0000);
-    const winnerA = aTeam.some(player => player.riotIdGameName === summonerName) && info.winningTeam === true;
-    const winnerB = bTeam.some(player => player.riotIdGameName === summonerName) && info.winningTeam === true;
+    const Footer = [
+        `GameMode: ${info.gameMode} \t GameID: ${info.matchId}`,
+    ];
+
+    const GREEN = 0x1f8b4c;
+    const RED = 0xff0000;
+    const hasRequestUser = (team: Participant[]) => team.some(player => player.riotIdGameName === summonerName);
+    const userInA = hasRequestUser(aTeam);
+
+    const aWon = userInA ? info.winningTeam === true : info.winningTeam === false;
+    const winnerA = () => (aWon ? GREEN : RED);
+    const winnerB = () => (aWon ? RED : GREEN);
+
     const ContainerA = new ContainerBuilder()  
-    addStyle(ContainerA, getColor(winnerA));
-    addTitleRow(ContainerA, Titles[0]);
+    addStyle(ContainerA, winnerA());
+    addTitleRow(ContainerA, Titles[0], 3);
+    addTitleRow(ContainerA, GameDate[0], 0);
     addSpacer(ContainerA);
     addSection(ContainerA, aTeam, info.gameVersion, region);
+    addTitleRow(ContainerA, Footer[0], 0);
     
     const ContainerB = new ContainerBuilder();
-    addStyle(ContainerB, getColor(winnerB));
-    addTitleRow(ContainerB, Titles[1]);
+    addStyle(ContainerB, winnerB());
+    addTitleRow(ContainerB, Titles[1], 3);
+    addTitleRow(ContainerB, GameDate[0], 0);
     addSpacer(ContainerB);
     addSection(ContainerB, bTeam, info.gameVersion, region);
+    addTitleRow(ContainerB, Footer[0], 0);
 
 
 
@@ -54,9 +71,9 @@ function addSpacer(container: ContainerBuilder) {
     return container;
 }
 
-function addTitleRow(container: ContainerBuilder, text: string) {
+function addTitleRow(container: ContainerBuilder, text: string, headerLevel: number) {
     container.addTextDisplayComponents(
-        new TextDisplayBuilder().setContent(`## ${text}`));
+        new TextDisplayBuilder().setContent(`${''.padStart(headerLevel, '#')} ${text}`));
     return container;
 }
 
@@ -66,7 +83,8 @@ function addSection(container: ContainerBuilder, Players: Participant[], gameVer
        JUNGLE: 'JUNGLE',
        MIDDLE: 'MID',
        BOTTOM: 'ADC',
-       UTILITY: 'SUPPORT'
+       UTILITY: 'SUPPORT',
+       undefined: 'ARAM'
     };
 
     Players.map((player) => {
@@ -84,7 +102,7 @@ function addSection(container: ContainerBuilder, Players: Participant[], gameVer
         container.addSectionComponents((section) =>
             section.addTextDisplayComponents(
                 new TextDisplayBuilder().setContent([
-                    `### [${player.riotIdGameName}#${player.riotIdTagline}](https://op.gg/lol/summoners/${region}/${encodeURIComponent(player.riotIdGameName)}-${encodeURIComponent(player.riotIdTagline)}) \n${Roles[String(player.individualPosition)]}`,
+                    `## [${player.riotIdGameName}#${player.riotIdTagline}](https://op.gg/lol/summoners/${region}/${encodeURIComponent(player.riotIdGameName)}-${encodeURIComponent(player.riotIdTagline)}) \n${Roles[player.individualPosition]}`,
                     `${player.kills}  /  ${player.deaths}  /  ${player.assists} ${String("").padEnd(KDALenghts.LIMIT - KDALenghts.COMBINED, ' ')} KDA: ${player.KDA.toFixed(2)}`,
                     '\u200b'
                 ].join('\r\n')),
