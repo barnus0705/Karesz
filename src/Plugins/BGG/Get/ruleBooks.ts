@@ -28,7 +28,6 @@ export async function getRulebooks(boardGameName: string) {
         return game;
     });
 
-    console.log(data);
     namesIncludesSearch = data.some((game: Rulebook) => 
                                      game.lowName.includes(boardGameNameLower));
 
