@@ -12,11 +12,12 @@ export async function getRiotPUUID(
     { summonerName, summonerTag, region }: UserPUUIDRequest):
      Promise<UserPUUIDRequest> {
 
-        const requestURL = `https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/
-                            ${summonerName}/${summonerTag}?api_key=${Enviroment.RIOT_API_KEY}`;
-     
+        if (!region) {
+            throw new Error('Missing Riot routing region');
+        }
+        const requestURL = `https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${summonerTag}?api_key=${Enviroment.RIOT_API_KEY}`;
+        console.log(requestURL);
         try{
-            console.log(requestURL);
             const response = await fetch(requestURL,
             {
                 method: 'GET',
